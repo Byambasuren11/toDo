@@ -1,0 +1,109 @@
+*{
+  border:none;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.body{
+  display: flex;
+width: 377px;
+padding: 24px 16px;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 40px;
+border-radius: 6px;
+background: #FFF;
+box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.16);
+}
+.container{
+  display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 20px;
+}
+.title{
+  color: #000;
+  text-align: center;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px; /* 140% */
+  letter-spacing: -0.5px;
+  align-self: stretch;
+}
+.inputToDo{
+display: flex;
+width: 280px;
+height: 40px;
+padding-left:16px;
+justify-content: center;
+align-items: flex-start;
+border-radius: 6px;
+border: 1px solid var(--border-border-border, #E4E4E7);
+}
+.addButton{
+display: flex;
+height: 40px;
+padding: 8px 16px;
+align-items: center;
+gap: 10px;
+border-radius: 6px;
+background: #3C82F6;
+}
+.inputContainer{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.categorize{
+  display: flex;
+align-items: center;
+gap: 6px;
+}
+.allList{
+  display: flex;
+height: 32px;
+padding: 4px 12px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+border-radius: 6px;
+background: #3C82F6;
+}
+.activeList{
+  display: flex;
+height: 32px;
+padding: 4px 12px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+border-radius: 6px;
+background: #F3F4F6;
+}
+.complatedList{
+  display: flex;
+height: 32px;
+padding: 4px 12px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+border-radius: 6px;
+background: #F3F4F6;
+}
+.notYet{
+color: #6B7280;
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+.a{
+  text-decoration: none;
+  color: #3C82F6;
+  display: flex;
+  align-items: center;
+}
+.poweredBy{
+  display: flex;
+  gap:5px;
+}
