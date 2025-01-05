@@ -1,47 +1,86 @@
 import { useState } from "react";
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
+import * as React from "react";
 import "./App.css";
 
 function App() {
   const [task, setTask] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [filter, setFilter] = useState("all"); // Filter: "all", "active", "completed"
 
   const onClick = () => {
-    setTask((task) => [...task, {name: input.value, isDone: false}]);
+    if (inputValue.trim() !== "") {
+      setTask((prevTask) => [...prevTask, { name: inputValue, isDone: false }]);
+      setInputValue(""); // Clear input after adding
+    }
   };
-  console.log(task);
+
+  const toggleTaskCompletion = (index) => {
+    setTask((prevTask) =>
+      prevTask.map((el, i) =>
+        i === index ? { ...el, isDone: !el.isDone } : el
+      )
+    );
+  };
+
+  const filteredTasks = task.filter((el) => {
+    if (filter === "active") return !el.isDone;
+    if (filter === "completed") return el.isDone;
+    return true; // "all"
+  });
+
   return (
     <>
       <div className="body">
         <div className="container">
-          <div className="title">To-Do list</div>
+          <div className="title">To-Do List</div>
           <div className="inputContainer">
-            <input id="input" className="inputToDo" />
+            <input
+              id="input"
+              className="inputToDo"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
             <button className="addButton" onClick={onClick}>
               Add
             </button>
           </div>
           <div className="categorize">
-            <button className="allList">All</button>
-            <button className="activeList">Active</button>
-            <button className="complatedList">Complated</button>
+            <button className="allList" onClick={() => setFilter("all")}>
+              All
+            </button>
+            <button className="activeList" onClick={() => setFilter("active")}>
+              Active
+            </button>
+            <button
+              className="completedList"
+              onClick={() => setFilter("completed")}
+            >
+              Completed
+            </button>
           </div>
         </div>
-        <div className="notYet">
-          {
-            task.length===0 ? <p> No tasks yet. Add one above!</p> : 
-            
-              task.map((el, i ) => (
-                <p key={i}>{el.name}</p>
-              ))
-            
-            }
-          
+        <div>
+          {task.length === 0 ? (
+            <p className="notTaskYetText">No tasks yet. Add one above!</p>
+          ) : (
+            <div className="todo">
+              {filteredTasks.map((el, i) => (
+                <p key={i}>
+                  <input
+                    type="checkbox"
+                    checked={el.isDone}
+                    onChange={() => toggleTaskCompletion(i)}
+                  />
+                  {el.name}
+                </p>
+              ))}
+            </div>
+          )}
         </div>
         <div className="poweredBy">
           <p>Powered by </p>
           <a href="https://pinecone.mn/" className="a">
-            Pinecone academy
+            Pinecone Academy
           </a>
         </div>
       </div>

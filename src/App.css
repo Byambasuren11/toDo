@@ -1,26 +1,26 @@
-*{
-  border:none;
+* {
+  border: none;
   font-family: Arial, Helvetica, sans-serif;
 }
-.body{
+.body {
   display: flex;
-width: 377px;
-padding: 24px 16px;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-gap: 40px;
-border-radius: 6px;
-background: #FFF;
-box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.16);
+  width: 377px;
+  padding: 24px 16px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.16);
 }
-.container{
+.container {
   display: flex;
-flex-direction: column;
-align-items: flex-start;
-gap: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
 }
-.title{
+.title {
   color: #000;
   text-align: center;
   font-size: 20px;
@@ -30,80 +30,98 @@ gap: 20px;
   letter-spacing: -0.5px;
   align-self: stretch;
 }
-.inputToDo{
-display: flex;
-width: 280px;
-height: 40px;
-padding-left:16px;
-justify-content: center;
-align-items: flex-start;
-border-radius: 6px;
-border: 1px solid var(--border-border-border, #E4E4E7);
+.inputToDo {
+  display: flex;
+  width: 280px;
+  height: 40px;
+  padding-left: 16px;
+  justify-content: center;
+  align-items: flex-start;
+  border-radius: 6px;
+  border: 1px solid var(--border-border-border, #e4e4e7);
 }
-.addButton{
-display: flex;
-height: 40px;
-padding: 8px 16px;
-align-items: center;
-gap: 10px;
-border-radius: 6px;
-background: #3C82F6;
+.addButton {
+  display: flex;
+  height: 40px;
+  padding: 8px 16px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 6px;
+  background: #3c82f6;
+  cursor: pointer;
 }
-.inputContainer{
+.inputContainer {
   display: flex;
   align-items: center;
   gap: 20px;
 }
-.categorize{
+.categorize {
   display: flex;
-align-items: center;
-gap: 6px;
+  align-items: center;
+  gap: 6px;
 }
-.allList{
+.allList {
   display: flex;
-height: 32px;
-padding: 4px 12px;
-justify-content: center;
-align-items: center;
-gap: 10px;
-border-radius: 6px;
-background: #3C82F6;
+  height: 32px;
+  padding: 4px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 6px;
+  background: #f3f4f6;
+  cursor: pointer;
 }
-.activeList{
+.activeList {
   display: flex;
-height: 32px;
-padding: 4px 12px;
-justify-content: center;
-align-items: center;
-gap: 10px;
-border-radius: 6px;
-background: #F3F4F6;
+  height: 32px;
+  padding: 4px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 6px;
+  background: #f3f4f6;
+  cursor: pointer;
 }
-.complatedList{
+.completedList {
   display: flex;
-height: 32px;
-padding: 4px 12px;
-justify-content: center;
-align-items: center;
-gap: 10px;
-border-radius: 6px;
-background: #F3F4F6;
+  height: 32px;
+  padding: 4px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 6px;
+  background: #f3f4f6;
+  cursor: pointer;
 }
-.notYet{
-color: #6B7280;
-text-align: center;
-font-size: 14px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+.notTaskYetText {
+  color: #6b7280;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
-.a{
+.a {
   text-decoration: none;
-  color: #3C82F6;
+  color: #3c82f6;
   display: flex;
   align-items: center;
 }
-.poweredBy{
+.poweredBy {
   display: flex;
-  gap:5px;
+  gap: 5px;
+}
+.todo {
+  display: flex;
+  flex-direction: column;
+  width: 380px;
+  align-items: start;
+}
+@keyframes buttonClick {
+  from {
+    background: #f3f4f6;
+  }
+  to {
+    background: #3c82f6;
+  }
 }
