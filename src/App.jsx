@@ -10,6 +10,7 @@ function App() {
   const [task, setTask] = useState([]);
   const [inputValue, setInputValue] = useState();
   const [filterState, setFilterState] = useState("all");
+  const [log, setLog] = useState([]);
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
@@ -25,7 +26,7 @@ function App() {
     ]);
     setInputValue("");
   };
-
+  const handleLog = (status) => {};
   const handleTasksChange = (id) => {
     const tasks = task.map((todo) => {
       if (todo.id === id) {
@@ -113,7 +114,9 @@ function App() {
             >
               Complated
             </button>
-            <button className="logList">Log</button>
+            <button className="logList" onClick={() => handleLog("log")}>
+              Log
+            </button>
           </div>
         </div>
         <div className="noTaskYet">
