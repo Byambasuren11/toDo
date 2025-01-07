@@ -2,8 +2,11 @@ import { useState } from "react";
 import * as React from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./App.css";
+import moment from "moment";
 
 function App() {
+  //console.log(moment().format("lll"));
+
   const [task, setTask] = useState([]);
   const [inputValue, setInputValue] = useState();
   const [filterState, setFilterState] = useState("all");
@@ -13,26 +16,59 @@ function App() {
   const addTask = () => {
     setTask((task) => [
       ...task,
-      { name: inputValue, status: "active", id: uuidv4() },
+      {
+        name: inputValue,
+        status: "active",
+        id: uuidv4(),
+        logs: [{ status: "active", moment: moment().format("llll") }, {}, {}],
+      },
     ]);
     setInputValue("");
   };
-  console.log(task);
+
   const handleTasksChange = (id) => {
-    console.log(id);
     const tasks = task.map((todo) => {
       if (todo.id === id) {
-        return { ...todo, status: "completed" };
+        if (todo.status == "completed") {
+          return { ...todo, status: "active" };
+        } else {
+          return { ...todo, status: "completed" };
+        }
       } else {
         return todo;
       }
     });
     setTask(tasks);
   };
+
   const handleFilterStateChange = (state) => {
     setFilterState(state);
-    //console.log(state);
   };
+
+  const deleteTask = (id) => {
+    alert("Are you sure you want to delete this task?");
+    const todos = task.filter((todo) => {
+      if (todo.id !== id) {
+        return todo;
+      }
+    });
+    setTask(todos);
+  };
+
+  const deleteCompletedTask = () => {
+    alert("Are you sure you want to delete completed tasks?");
+    const todos = task.filter((todo) => {
+      if (todo.status !== "completed") {
+        return todo;
+      }
+    });
+    setTask(todos);
+  };
+
+  const completedTasks = task.filter((task) => task.status === "completed");
+
+  const activeTasks = task.filter((task) => task.status === "active");
+
   return (
     <>
       <div className="body">
@@ -82,6 +118,7 @@ function App() {
         <div className="noTaskYet">
           {task.length === 0 ? (
             <p> No tasks yet. Add one above!</p>
+          
           ) : (
             <div>
               <p className="todoList">
@@ -94,15 +131,43 @@ function App() {
                     }
                   })
                   .map((element) => (
-                    <p className="todo">
+                    <div className="todo">
                       <input
+                        checked={element.status == "completed"}
                         type="checkbox"
                         onChange={() => handleTasksChange(element.id)}
                       />
-                      {element.name}
-                    </p>
+                      <p
+                        style={{
+                          textDecoration:
+                            element.status === "completed"
+                              ? "line-through"
+                              : "none",
+                        }}
+                      >
+                        {element.name}
+                      </p>
+
+                      <button
+                        className="deleteButton"
+                        onClick={() => deleteTask(element.id)}
+                      >
+                        delete
+                      </button>
+                    </div>
                   ))}
               </p>
+              <div className="bottomCompletedTask">
+                <p>
+                  {completedTasks.length} of {task.length} tasks completed
+                </p>
+                <p
+                  className="completedTaskDelete"
+                  onClick={() => deleteCompletedTask()}
+                >
+                  Clear Completed
+                </p>
+              </div>
             </div>
           )}
         </div>

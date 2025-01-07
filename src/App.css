@@ -2,6 +2,13 @@
   border: none;
   font-family: Arial, Helvetica, sans-serif;
 }
+#root{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .body {
   display: flex;
   width: 377px;
@@ -140,4 +147,38 @@ line-height: normal;
   height: 50px;
   margin-bottom: 5px;
   border-radius: 6px;
+  position: relative;
+  
+}
+.todo:hover{
+  .deleteButton{
+    display: block;
+  }
+}
+.deleteButton{
+  width: 50px;
+  height: 30px;
+  border-radius: 6px;
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  cursor: pointer;
+  display: none;
+  position: absolute;
+  right: 20px;
+}
+.deleteButton:hover{
+  background: rgb(246, 212, 212);
+}
+.completedTaskDelete{
+background-color: none;
+color: red;
+border:none;
+cursor: pointer;
+}
+.bottomCompletedTask{
+  display: flex;
+  gap:130px;
+  border-top: #e8ebef solid;
+  margin-top: 50px;
 }
