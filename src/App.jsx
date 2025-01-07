@@ -20,7 +20,7 @@ function App() {
         name: inputValue,
         status: "active",
         id: uuidv4(),
-        logs: [{ status: "active", moment: moment().format("llll") }, {}, {}],
+        logs: [{ status: "active", moment: moment().format("llll") }],
       },
     ]);
     setInputValue("");
@@ -113,12 +113,12 @@ function App() {
             >
               Complated
             </button>
+            <button className="logList">Log</button>
           </div>
         </div>
         <div className="noTaskYet">
           {task.length === 0 ? (
             <p> No tasks yet. Add one above!</p>
-          
           ) : (
             <div>
               <p className="todoList">

@@ -2,7 +2,7 @@
   border: none;
   font-family: Arial, Helvetica, sans-serif;
 }
-#root{
+#root {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -90,7 +90,18 @@
   cursor: pointer;
 }
 
-.completedList{
+.completedList {
+  display: flex;
+  height: 32px;
+  padding: 4px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 6px;
+  background: #f3f4f6;
+  cursor: pointer;
+}
+.logList {
   display: flex;
   height: 32px;
   padding: 4px 12px;
@@ -109,13 +120,13 @@
   font-weight: 400;
   line-height: normal;
 }
-.noTaskYet{
-color: #6B7280;
-text-align: center;
-font-size: 14px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+.noTaskYet {
+  color: #6b7280;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 .a {
   text-decoration: none;
@@ -129,17 +140,17 @@ line-height: normal;
 }
 .todo {
   display: flex;
-  gap:5px;
+  gap: 5px;
 }
-.todoList{
-  display:flex;
+.todoList {
+  display: flex;
   flex-direction: column;
   width: 380px;
   align-items: start;
 }
 
-.todo{
-  background-color:#F3F4F6 ;
+.todo {
+  background-color: #f3f4f6;
   display: flex;
   align-items: center;
   justify-content: start;
@@ -148,14 +159,13 @@ line-height: normal;
   margin-bottom: 5px;
   border-radius: 6px;
   position: relative;
-  
 }
-.todo:hover{
-  .deleteButton{
+.todo:hover {
+  .deleteButton {
     display: block;
   }
 }
-.deleteButton{
+.deleteButton {
   width: 50px;
   height: 30px;
   border-radius: 6px;
@@ -167,18 +177,18 @@ line-height: normal;
   position: absolute;
   right: 20px;
 }
-.deleteButton:hover{
+.deleteButton:hover {
   background: rgb(246, 212, 212);
 }
-.completedTaskDelete{
-background-color: none;
-color: red;
-border:none;
-cursor: pointer;
+.completedTaskDelete {
+  background-color: none;
+  color: red;
+  border: none;
+  cursor: pointer;
 }
-.bottomCompletedTask{
+.bottomCompletedTask {
   display: flex;
-  gap:130px;
+  gap: 130px;
   border-top: #e8ebef solid;
   margin-top: 50px;
 }
