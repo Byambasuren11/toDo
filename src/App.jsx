@@ -5,7 +5,7 @@ import "./App.css";
 import moment from "moment";
 
 function App() {
-  //console.log(moment().format("lll"));
+  //console.log(moment().format('MMMM Do YYYY, h:mm:ss a'));
 
   const [task, setTask] = useState([]);
   const [inputValue, setInputValue] = useState();
@@ -15,31 +15,39 @@ function App() {
     setInputValue(e.target.value);
   };
   const addTask = () => {
+    const newTask =  {
+      name: inputValue,
+      status: "active",
+      id: uuidv4(),
+    }
     setTask((task) => [
-      ...task,
-      {
-        name: inputValue,
-        status: "active",
-        id: uuidv4(),
-        logs: [{ status: "active", moment: moment().format("llll") }],
-      },
+      ...task, newTask
     ]);
+
+    setLog([...log,  {
+        name: inputValue,
+        id: newTask.id,
+        logs: [
+          {
+            status: task.status, moment:moment().format('MMMM Do YYYY, h:mm:ss a'),
+          }
+        ]
+      }])
+
     setInputValue("");
   };
-  const handleLog = (status) => {};
   const handleTasksChange = (id) => {
-    const tasks = task.map((todo) => {
-      if (todo.id === id) {
+    setTask(
+      task.map((todo) => {
+        if (todo.id !== id) return todo;
+
         if (todo.status == "completed") {
           return { ...todo, status: "active" };
         } else {
           return { ...todo, status: "completed" };
         }
-      } else {
-        return todo;
-      }
-    });
-    setTask(tasks);
+      })
+    ); 
   };
 
   const handleFilterStateChange = (state) => {
@@ -68,8 +76,7 @@ function App() {
 
   const completedTasks = task.filter((task) => task.status === "completed");
 
-  const activeTasks = task.filter((task) => task.status === "active");
-
+ // const activeTasks = task.filter((task) => task.status === "active");
   return (
     <>
       <div className="body">
@@ -114,7 +121,13 @@ function App() {
             >
               Complated
             </button>
-            <button className="logList" onClick={() => handleLog("log")}>
+            <button
+              className="logList"
+              onClick={() => handleFilterStateChange("log")}
+              style={{
+                background: filterState === "log" ? "#3c82f6" : "#f3f4f6",
+              }}
+            >
               Log
             </button>
           </div>
@@ -124,7 +137,7 @@ function App() {
             <p> No tasks yet. Add one above!</p>
           ) : (
             <div>
-              <p className="todoList">
+              <div className="todoList">
                 {task
                   .filter((element) => {
                     if (filterState === "all") {
@@ -133,8 +146,8 @@ function App() {
                       return element;
                     }
                   })
-                  .map((element) => (
-                    <div className="todo">
+                  .map((element, index) => (
+                    <div className="todo" key={index}>
                       <input
                         checked={element.status == "completed"}
                         type="checkbox"
@@ -159,7 +172,7 @@ function App() {
                       </button>
                     </div>
                   ))}
-              </p>
+              </div>
               <div className="bottomCompletedTask">
                 <p>
                   {completedTasks.length} of {task.length} tasks completed
