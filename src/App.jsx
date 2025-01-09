@@ -3,6 +3,7 @@ import * as React from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./App.css";
 import moment from "moment";
+import Button from "./components/Button";
 
 function App() {
   //console.log(moment().format('MMMM Do YYYY, h:mm:ss a'));
@@ -10,29 +11,31 @@ function App() {
   const [task, setTask] = useState([]);
   const [inputValue, setInputValue] = useState();
   const [filterState, setFilterState] = useState("all");
-  const [log, setLog] = useState([]);
+  const [logs, setLog] = useState([]);
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
   const addTask = () => {
-    const newTask =  {
+    const newTask = {
       name: inputValue,
       status: "active",
       id: uuidv4(),
-    }
-    setTask((task) => [
-      ...task, newTask
-    ]);
+    };
+    setTask((task) => [...task, newTask]);
 
-    setLog([...log,  {
-        name: inputValue,
+    setLog([
+      ...logs,
+      {
+        name: newTask.name,
         id: newTask.id,
         logs: [
           {
-            status: task.status, moment:moment().format('MMMM Do YYYY, h:mm:ss a'),
-          }
-        ]
-      }])
+            status: task.status,
+            moment: moment().format("MMMM Do YYYY, h:mm:ss a"),
+          },
+        ],
+      },
+    ]);
 
     setInputValue("");
   };
@@ -47,9 +50,20 @@ function App() {
           return { ...todo, status: "completed" };
         }
       })
-    ); 
-  };
+    );
+    setLog(
+      logs.map((log) => {
+        if (log.id !== id) return log;
 
+        if (log.status == "completed") {
+          return { ...log, status: "active" };
+        } else {
+          return { ...log, status: "completed" };
+        }
+      })
+    );
+  };
+  console.log(logs);
   const handleFilterStateChange = (state) => {
     setFilterState(state);
   };
@@ -76,7 +90,7 @@ function App() {
 
   const completedTasks = task.filter((task) => task.status === "completed");
 
- // const activeTasks = task.filter((task) => task.status === "active");
+  const activeTasks = task.filter((task) => task.status === "active");
   return (
     <>
       <div className="body">
@@ -89,103 +103,97 @@ function App() {
               value={inputValue}
               onChange={handleInputChange}
             />
-            <button className="addButton" onClick={addTask}>
-              Add
-            </button>
+            <Button className={"addButton"} onClick={addTask} text="All" />
           </div>
           <div className="categorize">
-            <button
-              className="allList"
+            <Button
+              className={"allList"}
+              text="All"
               onClick={() => handleFilterStateChange("all")}
               style={{
                 background: filterState === "all" ? "#3c82f6" : "#f3f4f6",
               }}
-            >
-              All
-            </button>
-            <button
-              className="activeList"
+            />
+            <Button
+              className={"activeList"}
+              text="Active"
               onClick={() => handleFilterStateChange("active")}
               style={{
                 background: filterState === "active" ? "#3c82f6" : "#f3f4f6",
               }}
-            >
-              Active
-            </button>
-            <button
-              className="completedList"
+            />
+            <Button
+              className={"completedList"}
+              text="Completed"
               onClick={() => handleFilterStateChange("completed")}
               style={{
                 background: filterState === "completed" ? "#3c82f6" : "#f3f4f6",
               }}
-            >
-              Complated
-            </button>
-            <button
-              className="logList"
+            />
+            <Button
+              className={"logList"}
+              text="Log"
               onClick={() => handleFilterStateChange("log")}
               style={{
                 background: filterState === "log" ? "#3c82f6" : "#f3f4f6",
               }}
-            >
-              Log
-            </button>
+            />
           </div>
         </div>
         <div className="noTaskYet">
-          {task.length === 0 ? (
-            <p> No tasks yet. Add one above!</p>
-          ) : (
-            <div>
-              <div className="todoList">
-                {task
-                  .filter((element) => {
-                    if (filterState === "all") {
-                      return true;
-                    } else if (filterState === element.status) {
-                      return element;
-                    }
-                  })
-                  .map((element, index) => (
-                    <div className="todo" key={index}>
-                      <input
-                        checked={element.status == "completed"}
-                        type="checkbox"
-                        onChange={() => handleTasksChange(element.id)}
-                      />
-                      <p
-                        style={{
-                          textDecoration:
-                            element.status === "completed"
-                              ? "line-through"
-                              : "none",
-                        }}
-                      >
-                        {element.name}
-                      </p>
-
-                      <button
-                        className="deleteButton"
-                        onClick={() => deleteTask(element.id)}
-                      >
-                        delete
-                      </button>
-                    </div>
-                  ))}
-              </div>
-              <div className="bottomCompletedTask">
-                <p>
-                  {completedTasks.length} of {task.length} tasks completed
-                </p>
-                <p
-                  className="completedTaskDelete"
-                  onClick={() => deleteCompletedTask()}
-                >
-                  Clear Completed
-                </p>
-              </div>
-            </div>
+          {completedTasks.length === 0 && filterState === "completed" && (
+            <div>No completed task</div>
           )}
+          {activeTasks.length === 0 && filterState === "active" && (
+            <div>No active task</div>
+          )}
+          <div>
+            <div className="todoList">
+              {task
+                .filter((element) => {
+                  if (filterState === "all") {
+                    return true;
+                  } else if (filterState === element.status) {
+                    return element;
+                  }
+                })
+                .map((element, index) => (
+                  <div className="todo" key={index}>
+                    <input
+                      checked={element.status == "completed"}
+                      type="checkbox"
+                      onChange={() => handleTasksChange(element.id)}
+                    />
+                    <p
+                      style={{
+                        textDecoration:
+                          element.status === "completed"
+                            ? "line-through"
+                            : "none",
+                      }}
+                    >
+                      {element.name}
+                    </p>
+                    <Button
+                      className={"deleteButton"}
+                      text="Delete"
+                      onClick={() => deleteTask(element.id)}
+                    />
+                  </div>
+                ))}
+            </div>
+            <div className="bottomCompletedTask">
+              <p>
+                {completedTasks.length} of {task.length} tasks completed
+              </p>
+              <p
+                className="completedTaskDelete"
+                onClick={() => deleteCompletedTask()}
+              >
+                Clear Completed
+              </p>
+            </div>
+          </div>
         </div>
         <div className="poweredBy">
           <p>Powered by </p>
