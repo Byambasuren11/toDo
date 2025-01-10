@@ -4,12 +4,16 @@ import { v4 as uuidv4 } from "uuid";
 import "./App.css";
 import moment from "moment";
 import Button from "./components/Button";
+import EmptyMessage from "./components/Empty-Message";
+import Bottom from "./components/Bottom";
+import List from "./components/Add-List";
+//import Style from "./components/style";
 
 function App() {
   //console.log(moment().format('MMMM Do YYYY, h:mm:ss a'));
 
   const [task, setTask] = useState([]);
-  const [inputValue, setInputValue] = useState();
+  const [inputValue, setInputValue] = useState("");
   const [filterState, setFilterState] = useState("all");
   const [logs, setLog] = useState([]);
   const handleInputChange = (e) => {
@@ -40,6 +44,8 @@ function App() {
     setInputValue("");
   };
   const handleTasksChange = (id) => {
+    console.log(id);
+    
     setTask(
       task.map((todo) => {
         if (todo.id !== id) return todo;
@@ -72,6 +78,7 @@ function App() {
     alert("Are you sure you want to delete this task?");
     const todos = task.filter((todo) => {
       if (todo.id !== id) {
+
         return todo;
       }
     });
@@ -103,7 +110,7 @@ function App() {
               value={inputValue}
               onChange={handleInputChange}
             />
-            <Button className={"addButton"} onClick={addTask} text="All" />
+            <Button className={"addButton"} onClick={addTask} text="Add" />
           </div>
           <div className="categorize">
             <Button
@@ -141,58 +148,24 @@ function App() {
           </div>
         </div>
         <div className="noTaskYet">
-          {completedTasks.length === 0 && filterState === "completed" && (
-            <div>No completed task</div>
-          )}
-          {activeTasks.length === 0 && filterState === "active" && (
-            <div>No active task</div>
-          )}
+          <EmptyMessage 
+          filterState={filterState}
+          task={task}
+           completedTasks={completedTasks}
+           activeTasks={activeTasks}
+          />
           <div>
-            <div className="todoList">
-              {task
-                .filter((element) => {
-                  if (filterState === "all") {
-                    return true;
-                  } else if (filterState === element.status) {
-                    return element;
-                  }
-                })
-                .map((element, index) => (
-                  <div className="todo" key={index}>
-                    <input
-                      checked={element.status == "completed"}
-                      type="checkbox"
-                      onChange={() => handleTasksChange(element.id)}
-                    />
-                    <p
-                      style={{
-                        textDecoration:
-                          element.status === "completed"
-                            ? "line-through"
-                            : "none",
-                      }}
-                    >
-                      {element.name}
-                    </p>
-                    <Button
-                      className={"deleteButton"}
-                      text="Delete"
-                      onClick={() => deleteTask(element.id)}
-                    />
-                  </div>
-                ))}
-            </div>
-            <div className="bottomCompletedTask">
-              <p>
-                {completedTasks.length} of {task.length} tasks completed
-              </p>
-              <p
-                className="completedTaskDelete"
-                onClick={() => deleteCompletedTask()}
-              >
-                Clear Completed
-              </p>
-            </div>
+            <List
+            task={task}
+            filterState={filterState}
+            onChange={handleTasksChange}
+            deleteTask={deleteTask}
+            />
+            <Bottom 
+            completedTasks={completedTasks}
+            onClick={deleteCompletedTask}
+            task={task}
+            />
           </div>
         </div>
         <div className="poweredBy">
